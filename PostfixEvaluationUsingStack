@@ -1,0 +1,70 @@
+import java.util.Scanner;
+
+class Stack {
+    int top;
+    int[] arr;
+
+    Stack(int size) {
+        arr = new int[size];
+        top = -1;
+    }
+
+    void push(int val) {
+        arr[++top] = val;
+    }
+
+    int pop() {
+        return arr[top--];
+    }
+
+    boolean isEmpty() {
+        return top == -1;
+    }
+}
+
+public class PostfixEvaluation {
+
+    public static int evaluatePostfix(String expression) {
+        Stack stack = new Stack(expression.length());
+
+        // Traverse from left to right
+        for (int i = 0; i < expression.length(); i++) {
+            char ch = expression.charAt(i);
+
+            // If character is a digit (operand)
+            if (Character.isDigit(ch)) {
+                stack.push(ch - '0'); // Convert char to int
+            }
+            // If character is an operator
+            else {
+                int val2 = stack.pop();
+                int val1 = stack.pop();
+
+                switch (ch) {
+                    case '+':
+                        stack.push(val1 + val2);
+                        break;
+                    case '-':
+                        stack.push(val1 - val2);
+                        break;
+                    case '*':
+                        stack.push(val1 * val2);
+                        break;
+                    case '/':
+                        stack.push(val1 / val2);
+                        break;
+                }
+            }
+        }
+        return stack.pop(); // Final result
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Postfix Expression (e.g., 231*+9-): ");
+        String expression = sc.nextLine().replaceAll("\\s+", ""); // Remove spaces
+
+        int result = evaluatePostfix(expression);
+        System.out.println("Result: " + result);
+    }
+}

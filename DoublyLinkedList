@@ -1,0 +1,355 @@
+public class Dll
+{
+    class node
+    {
+        node next;
+        node prev;
+        int data;
+        node(int data)
+        {
+            this.data=data;
+            next=null;
+            prev=null;
+        }
+    }
+    node first=null;
+
+    void insertFirst(int data)
+    {
+        node n=new node(data);
+        if(first==null)
+        {
+            first=n;
+        }
+        else
+        {
+            n.next=first;
+            first.prev=n;
+            first=n;
+        }
+    }
+
+    void insertLast(int data)
+    {
+        node n=new node(data);
+        if(first==null)
+        {
+            first=n;
+        }
+        else
+        {
+            node temp=first;
+            while(temp.next!=null)
+            {
+                temp=temp.next;
+            }
+            temp.next=n;
+            n.prev=temp;
+        }
+    }
+
+    void deleteFirst()
+    {
+        if(first==null)
+        {
+            System.out.println("linked list is empty!");
+        }
+        else if (first.next==null && first.prev==null)
+        {
+            first.next=null;
+            first.prev=null;
+
+        }
+        else
+        {
+            node del=first;
+            first=first.next;
+            first.prev=null;
+            del.next=null;
+            del=null;
+        }
+    }
+
+    void deleteLast()
+    {
+        if(first==null)
+        {
+            System.out.println("Linked list is empty!");
+        }
+        else if(first.next==null)
+        {
+            first=null;
+        }
+        else
+        {
+            node temp=first;
+            while(temp.next!=null)
+            {
+                temp=temp.next;
+            }
+            temp.prev.next=null;
+            temp.prev=null;
+            temp=null;
+        }
+    }
+
+    void display()
+    {
+        if(first==null)
+        {
+            System.out.println("Ll is empty!");
+        }
+        else
+        {
+            node temp=first;
+            do
+            {
+                System.out.print(temp.data+"->");
+                temp=temp.next;
+            }
+            while(temp!=null);
+            System.out.println("null");
+        }
+    }
+
+    void search(int value)
+    {
+        node temp=first;
+        int c=0,f=0;
+        do {
+            c++;
+            if(temp.data==value)
+            {
+                System.out.println("Data found:"+c);
+                f=1;
+                break;
+            }
+            temp=temp.next;
+        }
+        while(temp!=null);
+        if(f==0)
+        {
+            System.out.println("Value not found.");
+        }
+    }
+
+    void revDisplay()
+    {
+        if(first==null)
+        {
+            System.out.println("Linked list is empty!");
+        }
+        else
+        {
+            System.out.print("null");
+            node temp=first;
+            while (temp.next!=null)
+            {
+                temp=temp.next;
+            }
+            while (temp!=null)
+            {
+                System.out.print("<-"+temp.data);
+                temp=temp.prev;
+            }
+        }
+    }
+
+    void insertAftervalue(int data,int value)
+    {
+        node temp=first;
+        int c=0,f=0;
+        do {
+            c++;
+            if(temp.data==value)
+            {
+                System.out.println("Data found:"+c);
+                f=1;
+                break;
+            }
+            temp=temp.next;
+        }
+        while(temp!=null);
+        if(f==0)
+        {
+            System.out.println("Value not found.");
+        }
+        else
+        {
+            node n=new node(data);
+            if(first.data==value && first.next==null)
+            {
+                insertLast(data);
+            }
+            else
+            {
+                node tem=first;
+                while(tem.data!=value)
+                {
+                    tem=tem.next;
+                }
+                if (tem.next!=null)
+                {
+                    n.next=tem.next;
+                    n.prev=tem;
+                    tem.next.prev=n;
+                    tem.next=n;
+                }
+                else
+                {
+                    n.prev=tem;
+                    tem.next=n;
+                }
+            }
+        }
+    }
+    void insertBeforevalue(int data,int value)
+    {
+        node temp=first;
+        int c=0,f=0;
+        do {
+            c++;
+            if(temp.data==value)
+            {
+                System.out.println("Data found:"+c);
+                f=1;
+                break;
+            }
+            temp=temp.next;
+        }
+        while(temp!=null);
+        if(f==0)
+        {
+            System.out.println("Value not found.");
+        }
+        else
+        {
+            node n=new node(data);
+            if(first.data==value && first.next==null && first.prev==null)
+            {
+                insertFirst(data);
+            }
+            else
+            {
+                node tem=first;
+                while(tem.next.data!=value)
+                {
+                    tem=tem.next;
+                }
+                    n.next=tem.next;
+                    n.prev=tem;
+                    tem.next.prev=n;
+                    tem.next=n;
+            }
+        }
+    }
+
+    void deleteValue(int value)
+    {
+        node temp=first;
+        int c=0,f=0;
+        do {
+            c++;
+            if(temp.data==value)
+            {
+                System.out.println("Data found:"+c);
+                f=1;
+                break;
+            }
+            temp=temp.next;
+        }
+        while(temp!=null);
+        if(f==0)
+        {
+            System.out.println("Value not found.");
+        }
+        else
+        {
+            if (first==null)
+            {
+                System.out.println("LL is empty!");
+            }
+            else if(first.data==value && first.next==null)
+            {
+                first=null;
+                return;
+            }
+            else if(first.data==value && first.next!=null)
+            {
+                node del=first;
+                first=first.next;
+                first.prev=null;
+                del.next=null;
+                del=null;
+            }
+            else
+            {
+                node temp1=first;
+                while(temp1.data!=value)
+                {
+                    temp1=temp1.next;
+                }
+                if(temp1.next!=null)
+                {
+                    temp1.next.prev=temp1.prev;
+                    temp1.prev.next=temp1.next;
+                }
+                else
+                {
+                    temp1.prev.next=null;
+                    temp1.prev=null;
+                }
+                temp1.next=null;
+                temp1.prev=null;
+                temp1=null;
+            }
+        }
+    }
+    void deleteOddpos()
+    {
+        if(first==null)
+        {
+            System.out.println("Linked list is empty!!");
+        }
+        else if(first.next==first)
+        {
+            first=null;
+            return;
+        }
+        else
+        {
+            deleteFirst();
+            node cur=first;
+            while(true)
+            {
+                node del1=cur.next;
+                cur.next=del1.next;
+                del1.next.prev=cur;
+                del1.next=null;
+                del1.prev=null;
+                cur=cur.next;
+                if(cur==null || cur.next==null)
+                {
+                    break;
+                }
+            }
+        }
+    }
+}
+
+class run1
+{
+    public static void main(String[] args) {
+        Dll d=new Dll();
+        d.insertLast(1);
+        d.insertLast(2);
+        d.insertLast(3);
+        d.insertLast(4);
+        d.display();
+        d.deleteOddpos();
+//        d.deleteFirst();
+//        d.deleteLast();
+        d.display();
+        d.revDisplay();
+    }
+}

@@ -1,0 +1,191 @@
+class BST
+{
+    class node
+    {
+        int data;
+        node left;
+        node right;
+
+        node(int data)
+        {
+            this.data=data;
+            left=null;
+            right=null;
+        }
+    }
+    node root=null;
+    void insert(int data)
+    {
+        node n=new node(data);
+        if(root==null)
+        {
+            root=n;
+            return;
+        }
+        node temp=root;
+        while (true)
+        {
+            if (data<temp.data && temp.left==null)
+            {
+                temp.left=n;
+                return;
+            }
+            else if (data> temp.data && temp.right==null)
+            {
+                temp.right=n;
+                return;
+            }
+            else
+            {
+                if (data<temp.data)
+                {
+                    temp=temp.left;
+                }
+                else
+                {
+                    temp=temp.right;
+                }
+            }
+        }
+    }
+    void inOrder(node root)
+    {
+        if(root!=null)
+        {
+            inOrder(root.left);
+            System.out.print(root.data+"-");
+            inOrder(root.right);
+        }
+    }
+    void postOrder(node root)
+    {
+        if (root!=null)
+        {
+            postOrder(root.left);
+            postOrder(root.right);
+            System.out.print(root.data+"-");
+        }
+    }
+    void preOrder(node root)
+    {
+        if(root!=null)
+        {
+            System.out.print(root.data+"-");
+            preOrder(root.left);
+            preOrder(root.right);
+        }
+    }
+    int min(node root)
+    {
+        node temp=root;
+        while (temp.left!=null)
+        {
+            temp=temp.left;
+        }
+        return temp.data;
+    }
+    int max(node root)
+    {
+        node temp=root;
+        while (temp.right!=null)
+        {
+            temp=temp.right;
+        }
+        return temp.data;
+    }
+    void search(int value)
+    {
+        if (root==null)
+        {
+            System.out.println("Tree is empty");
+        }
+        else
+        {
+            node temp=root;
+            while (temp!=null)
+            {
+                if (temp.data==value)
+                {
+                    System.out.println(value+" found");
+                    return;
+                }
+                else if(value<temp.data)
+                {
+                    temp=temp.left;
+                }
+                else if(value>temp.data)
+                {
+                    temp=temp.right;
+                }
+            }
+            System.out.println(value+" Not found");
+        }
+    }
+
+    void delete(int value)
+    {
+        root = deleterec(root, value);
+    }
+    node deleterec(node root,int value) {
+        if (root == null) {
+            return root;
+        }
+        if (value < root.data) {
+            root.left = deleterec(root.left, value);
+        } else if (value > root.data) {
+            root.right = deleterec(root.right, value);
+        } else {
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            } else {
+                //root.data=max(root.left);
+                //root.left=deleterec(root.right,value);
+                root.data = min(root.right);
+                root.right = deleterec(root.left, value);
+            }
+        }
+        return root;
+    }
+}
+
+class Ans
+{
+    public static void main(String[] args) {
+        BST b=new BST();
+        b.insert(50);
+        b.insert(60);
+        b.insert(25);
+        b.insert(40);
+        b.insert(30);
+        b.insert(70);
+        b.insert(35);
+        b.insert(10);
+        b.insert(55);
+        b.insert(65);
+        b.insert(5);
+
+        System.out.print("Preorder:");
+        b.preOrder(b.root);
+        System.out.println();
+        System.out.print("Inorder:");
+        b.inOrder(b.root);
+        System.out.println();
+        System.out.print("Postorder:");
+        b.postOrder(b.root);
+        System.out.println();
+
+        System.out.println("Max:"+b.max(b.root));
+        System.out.println("Min:"+b.min(b.root));
+
+        b.search(35);
+        b.search(24);
+
+        b.delete(23);
+        b.delete(65);
+
+        b.inOrder(b.root);
+    }
+}
+

@@ -1,0 +1,363 @@
+public class Circularll
+{
+    public static void main(String[] args) {
+        cll c=new cll();
+        c.insertFirst(10);
+        c.insertFirst(20);
+        c.display();
+        System.out.println();
+        c.insertLast(30);
+        c.insertLast(40);
+        c.display();
+        System.out.println();
+        c.inserAfterValue(10,100);
+        c.inserAfterValue(20,200);
+        c.insertBeforeValue(30,300);
+        c.insertBeforeValue(40,400);
+        c.display();
+        System.out.println();
+        c.deleteFirst();
+        c.deleteLast();
+        c.display();
+        System.out.println();
+        c.deleteOddpos();
+        c.display();
+        System.out.println();
+        c.deleteEvepos();
+        c.display();
+        c.deleteValue(10);
+        c.display();
+    }
+
+}
+class cll
+{
+    class node
+    {
+        int data;
+        node next;
+        node(int d)
+        {
+            data=d;
+            next=null;
+        }
+    }
+    node first=null;
+
+    void insertFirst(int data)
+    {
+        node n=new node(data);
+        if(first==null)
+        {
+            first=n;
+            first.next=first;
+        }
+        else
+        {
+            n.next=first;
+            node temp=first;
+            while(temp.next!=first)
+            {
+                temp=temp.next;
+
+            }
+            temp.next=n;
+            first=n;
+        }
+    }
+
+    void insertLast(int data)
+    {
+        node n=new node(data);
+        if(first==null)
+        {
+            first=n;
+            first.next=first;
+        }
+        else
+        {
+            node temp=first;
+            while(temp.next!=first)
+            {
+                temp=temp.next;
+
+            }
+            temp.next=n;
+            n.next=first;
+        }
+    }
+
+    void display()
+    {
+         if(first==null)
+         {
+             System.out.println("Linked list is empty!");
+         }
+         else
+         {
+             node temp=first;
+             do {
+                 System.out.print(temp.data+"->");
+                 temp=temp.next;
+             }
+             while(temp!=first);
+         }
+    }
+
+    void search(int value)
+    {
+        int c=0,f=0;
+        node temp=first;
+
+        do {
+            c++;
+            if(temp.data==value)
+            {
+                System.out.println("Value found at:"+c);
+                f=1;
+                break;
+            }
+            temp=temp.next;
+        }while (temp!=first);
+        System.out.println();
+        if(f==0)
+        {
+            System.out.println("Value not found!");
+        }
+    }
+    void insertBeforeValue(int value,int data)
+    {
+        int c=0,f=0;
+        node temp=first;
+
+        do {
+            c++;
+            if(temp.data==value)
+            {
+                System.out.println("Value found at:"+c);
+                f=1;
+                break;
+            }
+            temp=temp.next;
+        }while (temp!=first);
+        System.out.println();
+        if(f==0)
+        {
+            System.out.println("Value not found!");
+        }
+        else
+        {
+            node n=new node(data);
+            if(first.data==value && first.next==first)
+            {
+                n.next=first;
+                first.next=n;
+            }
+            else if (first.data==value && first.next!=first)
+            {
+             n.next=first;
+             node temp1=first;
+             while(temp1.next!=first)
+             {
+                 temp1=temp1.next;
+             }
+             temp1.next=n;
+             first=n;
+            }
+            else
+            {
+                node temp1=first;
+                while(temp1.next.data!=value)
+                {
+                    temp1=temp1.next;
+                }
+                n.next=temp1.next;
+                temp1.next=n;
+            }
+        }
+    }
+    void inserAfterValue(int value,int data)
+    {
+        int c=0,f=0;
+        node temp=first;
+
+        do {
+            c++;
+            if(temp.data==value)
+            {
+                System.out.println("Value found at:"+c);
+                f=1;
+                break;
+            }
+            temp=temp.next;
+        } while (temp!=first);
+        System.out.println();
+        if(f==0)
+        {
+            System.out.println("Value not found!");
+        }
+        else
+        {
+            node n=new node(data);
+            if(first.data==value && first.next==first)
+            {
+                n.next=first;
+                first.next=n;
+            }
+
+            else
+            {
+                node temp1=first;
+                while(temp1.data!=value)
+                {
+                    temp1=temp1.next;
+                }
+                n.next=temp1.next;
+                temp1.next=n;
+            }
+        }
+    }
+    void deleteFirst()
+    {
+        if(first==null)
+        {
+            System.out.println("Linked list is empty");
+        }
+        else if(first.next==first)
+        {
+            first=null;
+            return;
+        }
+        else
+        {
+            node del=first;
+            node temp=first;
+            while(temp.next!=first)
+            {
+                temp=temp.next;
+            }
+            temp.next=first.next;
+            first=first.next;
+            del.next=null;
+        }
+    }
+    void deleteLast()
+    {
+        if(first==null)
+        {
+            System.out.println("Linked list is empty");
+        }
+        else if (first.next==first)
+        {
+            first=null;
+            return;
+        }
+        else
+        {
+            node temp=first;
+            while(temp.next.next!=first)
+            {
+                temp=temp.next;
+            }
+            node del=temp.next;
+            temp.next=first;
+            del.next=null;
+        }
+    }
+
+    void deleteValue(int data)
+    {
+        int c=0,f=0;
+        node temp=first;
+
+        do {
+            c++;
+            if(temp.data==data)
+            {
+                System.out.println("Value found at:"+c);
+                f=1;
+                break;
+            }
+            temp=temp.next;
+        } while (temp!=first);
+        System.out.println();
+        if(f==0)
+        {
+            System.out.println("Value not found!");
+        }
+        else
+        {
+            if(first.data==data && first.next==first)
+            {
+                first=null;
+                return;
+            }
+            else if (first.data==data && first.next!=first)
+            {
+             deleteFirst();
+            }
+            else
+            {
+                node temp1=first;
+                while (temp1.next.data!=data)
+                {
+                    temp1=temp1.next;
+                }
+                node del=temp1.next;
+                temp1.next=del.next;
+                del.next=null;
+            }
+        }
+    }
+
+    void deleteOddpos()
+    {
+        if(first==null)
+        {
+            System.out.println("Linked list is empty!!");
+        }
+        else if(first.next==first)
+        {
+            first=null;
+            return;
+        }
+        else
+        {
+            deleteFirst();
+            node cur=first;
+            while(true)
+            {
+                node del1=cur.next;
+                cur.next=del1.next;
+                del1.next=null;
+                cur=cur.next;
+                if(cur==first || cur.next==first)
+                {
+                    break;
+                }
+            }
+        }
+    }
+    void deleteEvepos()
+    {
+        if(first==null)
+        {
+            System.out.println("Linked list is empty!!");
+        }
+        else
+        {
+            node cur=first;
+            while(true)
+            {
+                node del1=cur.next;
+                cur.next=del1.next;
+                del1.next=null;
+                cur=cur.next;
+                if(cur==first || cur.next==first)
+                {
+                    break;
+                }
+            }
+        }
+    }
+}

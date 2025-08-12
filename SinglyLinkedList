@@ -1,0 +1,316 @@
+import java.util.Scanner;
+
+public class Singlyll
+{
+    public static void main(String[] args)
+    {
+        Sll s=new Sll();
+        Scanner sc=new Scanner(System.in);
+        boolean ans=true;
+        while(ans)
+        {
+            System.out.println("Enter your choice:");
+            System.out.println("1.Insert at front");
+            System.out.println("2.Insert at last");
+            System.out.println("3.Insert before a value");
+            System.out.println("4.Insert after a value");
+            System.out.println("5.Search element");
+            System.out.println("6.Display");
+            System.out.println("7.Delete at front");
+            System.out.println("8.Delete at last");
+            System.out.println("9.Delete particular value");
+            System.out.println("10.Exit");
+            int choice=sc.nextInt();
+            switch (choice)
+            {
+                case 1:
+                    System.out.println("Enter number to insert");
+                    int a=sc.nextInt();
+                    s.InsertFront(a);
+                    break;
+                case 2:
+                    System.out.println("Enter number to insert");
+                    int b=sc.nextInt();
+                    s.InsertLast(b);
+                    break;
+                case 3:
+                    System.out.println("Enter number to insert");
+                    int c=sc.nextInt();
+                    System.out.println("Enter element for before particular value");
+                    int d=sc.nextInt();
+                    s.InsertBeforeParticularValue(c,d);
+                    break;
+                case 4:
+                    System.out.println("Enter a number to insert");
+                    int e=sc.nextInt();
+                    System.out.println("Enter a element after particular value");
+                    int f=sc.nextInt();
+                    s.InsertAfterParticularValue(e,f);
+                    break;
+                case 5:
+                    System.out.println("Enter number to search");
+                    int g= sc.nextInt();;
+                    s.search(g);
+                    break;
+                case 6:
+                    System.out.println("Linked list");
+                    s.display();
+                    break;
+                case 7:
+                    s.deleteFirst();
+                    break;
+                case 8:
+                    s.deleteLast();
+                    break;
+                case 9:
+                    System.out.println("Enter element to delete");
+                    int h=sc.nextInt();
+                    s.deleteParticularValue(h);
+                    break;
+                case 10:
+                    System.out.println("Exited");
+                    ans=false;
+                    break;
+            }
+        }
+    }
+}
+class Sll
+{
+    class Node
+    {
+        int data;
+        Node  next;
+        Node(int d)
+        {
+            data=d;
+            next=null;
+        }
+    }
+    Node first=null;
+    void InsertFront(int data)
+    {
+        Node n=new Node(data);
+        if(first==null)
+        {
+            first=n;
+        }
+        else
+        {
+            n.next=first;
+            first=n;
+        }
+    }
+    void InsertLast(int data)
+    {
+        Node n=new Node(data);
+        if(first==null)
+        {
+            first=n;
+        }
+        else
+        {
+            Node temp=first;
+            while(temp.next!=null)
+            {
+                temp=temp.next;
+            }
+            temp.next=n;
+        }
+    }
+    void display()
+    {
+        if(first==null)
+        {
+            System.out.println("Linked list is empty!!");
+        }
+        else
+        {
+            Node temp=first;
+            while(temp!=null)
+            {
+                System.out.print(temp.data+"->");
+                temp=temp.next;
+            }
+            System.out.println("null");
+        }
+    }
+    void search(int value)
+    {
+        int c=0,f=0;
+        Node dummy=first;
+        while(dummy!=null)
+        {
+            c++;
+            if(dummy.data==value)
+            {
+                System.out.println("Value  found at "+c+" Position");
+                f=1;
+                break;
+            }
+            dummy=dummy.next;
+        }
+        if(f==0)
+        {
+            System.out.println("Not Found");
+        }
+    }
+
+    void InsertBeforeParticularValue(int value,int data)
+    {
+        int c=0,f=0;
+        Node dummy=first;
+        while(dummy!=null)
+        {
+            c++;
+            if(dummy.data==value)
+            {
+                System.out.println("Value  found at"+c+"Position");
+                f=1;
+                break;
+            }
+            dummy=dummy.next;
+        }
+        if(f==0)
+        {
+            System.out.println("Not Found");
+        }
+        else
+        {
+            Node n=new Node(data);
+            if(first.data==value)
+            {
+                n.next=first;
+                first=n;
+            }
+            else
+            {
+                Node temp=first;
+                while(temp.next.data!=value)
+                {
+                    temp=temp.next;
+                }
+                n.next=temp.next;
+                temp.next=n;
+            }
+        }
+    }
+    void InsertAfterParticularValue(int value,int data)
+    {
+        int c=0,f=0;
+        Node dummy=first;
+        while(dummy!=null)
+        {
+            c++;
+            if(dummy.data==value)
+            {
+                System.out.println("Value  found at"+c+"Position");
+                f=1;
+                break;
+            }
+            dummy=dummy.next;
+        }
+        if(f==0)
+        {
+            System.out.println("Not Found");
+        }
+        else
+        {
+         Node n=new Node(data);
+         Node temp=first;
+         while(temp.data!=value)
+         {
+             temp=temp.next;
+         }
+         n.next=temp.next;
+         temp.next=n;
+        }
+    }
+    void deleteFirst()
+    {
+        if(first==null)
+        {
+            System.out.println("Linked list is empty");
+        }
+        else
+        {
+            //System.out.println(first.data+" is deleted.");
+            Node del=first;
+            first=first.next;
+            del.next=null;
+            System.out.println(del.data+" is deleted");
+        }
+    }
+    void deleteLast()
+    {
+        if(first==null)
+        {
+            System.out.println("Linked list is empty.");
+        }
+        else if(first.next==null)
+        {
+            first=null;
+        }
+        else
+        {
+            Node temp=first;
+            while(temp.next.next!=null)
+            {
+                temp=temp.next;
+            }
+            System.out.println("Element deleted is "+temp.next.data);
+            temp.next=null;
+        }
+//        else
+//        {
+//         Node ln=first.next;
+//         Node sln=first;
+//         while(ln.next!=null)
+//         {
+//             ln=ln.next;
+//             sln=sln.next;
+//         }
+//         sln.next=null;
+//            System.out.println("Last element deleted is "+ln.data);
+//        }
+    }
+    void deleteParticularValue(int value)
+    {
+        int c=0,f=0;
+        Node dummy=first;
+        while(dummy!=null)
+        {
+            c++;
+            if(dummy.data==value)
+            {
+                System.out.println("Value  found at"+c+"Position");
+                f=1;
+                break;
+            }
+            dummy=dummy.next;
+        }
+        if(f==0)
+        {
+            System.out.println("Not Found");
+        }
+        else
+        {
+            if(first.data==value)
+            {
+                deleteFirst();
+            }
+            else
+            {
+                Node temp=first;
+                while(temp.next.data!=value)
+                {
+                    temp=temp.next;
+                }
+                Node del=temp.next;
+                temp.next=temp.next.next;
+                del.next=null;
+                System.out.println("Element deleted is:"+del.data);
+            }
+        }
+    }
+}

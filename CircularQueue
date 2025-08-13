@@ -1,0 +1,106 @@
+import java.util.Scanner;
+public class CircularQueue
+{
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter size of Queue:");
+        int n=sc.nextInt();
+        Queuec Q=new Queuec(n);
+        boolean boo=true;
+        while(boo)
+        {
+            System.out.println("Enter your choice");
+            System.out.println("Enter 1 for enqueue:");
+            System.out.println("Enter 2 for dequeue:");
+            System.out.println("Enter 3 for display:");
+            System.out.println("Enter 4 to exit:");
+            int c=sc.nextInt();
+            switch (c)
+            {
+                case 1:
+                    Q.enqueue();
+                    break;
+                case 2:
+                    Q.dequeue();
+                    break;
+                case 3:
+                    Q.display();
+                    break;
+                case 4:
+                    boo=false;
+                    System.out.println("Exited!!");
+                    break;
+            }
+        }
+
+    }
+}
+class Queuec
+{
+    Scanner sc=new Scanner(System.in);
+    int q[];
+    int size,front,rear;
+    Queuec(int s)
+    {
+        q=new int[s];
+        size=s;
+        front=-1;
+        rear=-1;
+    }
+    void enqueue()
+    {
+        if((front==0 && rear==size-1)||(front==rear+1))
+        {
+            System.out.println("Queue is overflow!!");
+        }
+        else
+        {
+            rear=(rear+1)%size;
+            System.out.println("Enter number to insert:");
+            int y=sc.nextInt();
+            q[rear]=y;
+            if(front==-1)
+            {
+                front=0;
+            }
+            System.out.println(y+" Is Inserted!");
+        }
+    }
+    void  dequeue()
+    {
+        if(front==-1)
+        {
+            System.out.println("Queue is underflow!!");
+        }
+        else
+        {
+            int Y=q[front];
+            if(front==rear)
+            {
+                front=-1;
+                rear=-1;
+            }
+            else
+            {
+                front=(front+1)%size;
+            }
+            System.out.println("Deleted element"+Y);
+        }
+    }
+    void display()
+    {
+        if(front==-1)
+        {
+            System.out.println("Queue is empty");
+        }
+        else
+        {
+            System.out.println("Queue:");
+            for(int i=front;i != rear;i= (i+1) %size)
+            {
+                System.out.println(q[i]);
+            }
+            System.out.println(q[rear]);
+        }
+    }
+}
